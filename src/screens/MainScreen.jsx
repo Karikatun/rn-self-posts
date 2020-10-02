@@ -1,16 +1,13 @@
 import React from 'react'
 
-import {View, StyleSheet, Text, Button, FlatList} from 'react-native'
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-
-import AppHeaderIcon from '../AppHeaderIcon';
-import {DATA} from "../data";
+import {View, StyleSheet, FlatList} from 'react-native'
+import {DATA} from '../data';
 
 import Post from "../components/Post";
 
 export const MainScreen = ({ navigation }) => {
   const openPostHandler = (post) => {
-    navigation.navigate('Post', { postId: post.id, date: post.date })
+    navigation.navigate('Post', { postId: post.id, date: post.date, booked: post.booked })
   }
 
   return (
