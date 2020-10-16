@@ -21,10 +21,6 @@ export const MainScreen = ({ navigation }) => {
   )
 }
 
-MainScreen.navigationOptions = {
-  headerTitle: 'Мой блог'
-}
-
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,

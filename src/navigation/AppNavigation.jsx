@@ -18,63 +18,71 @@ const BottomTab = createBottomTabNavigator();
 
 export function AppNavigation () {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={'MainScreen'}
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: Platform.OS === 'android' ? THEME.MAIN_COLOR : '#fff'
-          },
-          headerTintColor: Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR
-        }}>
-        <Stack.Screen
-          name={'Main'}
-          component={MainScreen}
-          options={{
-            title: 'Мой блог',
-            headerRight: () => (
-              <TouchableWithoutFeedback onPress={() => console.log('press photo')}>
-                <Ionicons name="ios-camera" size={24} color={Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR} style={styles.rightHeaderButton} />
-              </TouchableWithoutFeedback>
-            ),
-            headerLeft: () => (
-              <TouchableWithoutFeedback onPress={() => console.log('press drawer')}>
-                <Ionicons name="ios-menu" size={24} color={Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR} style={styles.leftHeaderButton} />
-              </TouchableWithoutFeedback>
-            ),
-          }}/>
+    <Stack.Navigator
+      initialRouteName={'MainScreen'}
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Platform.OS === 'android' ? THEME.MAIN_COLOR : '#fff'
+        },
+        headerTintColor: Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR
+      }}>
+      <Stack.Screen
+        name={'Main'}
+        component={MainScreen}
+        options={{
+          title: 'Мой блог',
+          headerRight: () => (
+            <TouchableWithoutFeedback onPress={() => console.log('press photo')}>
+              <Ionicons name="ios-camera" size={24} color={Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR} style={styles.rightHeaderButton} />
+            </TouchableWithoutFeedback>
+          ),
+          headerLeft: () => (
+            <TouchableWithoutFeedback onPress={() => console.log('press drawer')}>
+              <Ionicons name="ios-menu" size={24} color={Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR} style={styles.leftHeaderButton} />
+            </TouchableWithoutFeedback>
+          ),
+        }}/>
 
-        <Stack.Screen
-          name={'Post'}
-          component={PostScreen}
-          options={({ route: { params: { date, booked } } }) => ({
-            title: 'Пост от ' + new Date(date).toLocaleDateString(),
-            headerRight: () => (
-              <TouchableWithoutFeedback onPress={() => console.log('press photo')}>
-                <Ionicons
-                  name={booked ? "ios-star" : 'ios-star-outline'}
-                  size={24} color={Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR}
-                  style={styles.rightHeaderButton}
-                />
-              </TouchableWithoutFeedback>
-            ),
-          })}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+      <Stack.Screen
+        name={'Post'}
+        component={PostScreen}
+        options={({ route: { params: { date, booked } } }) => ({
+          title: 'Пост от ' + new Date(date).toLocaleDateString(),
+          headerRight: () => (
+            <TouchableWithoutFeedback onPress={() => console.log('press photo')}>
+              <Ionicons
+                name={booked ? "ios-star" : 'ios-star-outline'}
+                size={24} color={Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR}
+                style={styles.rightHeaderButton}
+              />
+            </TouchableWithoutFeedback>
+          ),
+        })}/>
+    </Stack.Navigator>
   )
 }
 
 export function BottomNavigation () {
   return (
     <NavigationContainer>
-      <BottomTab.Navigator>
+      <BottomTab.Navigator
+        initialRouteName={'MainScreen'}
+        tabBarOptions: {{
+          activeTintColor: THEME.MAIN_COLOR
+        }}>
         <BottomTab.Screen
-          name='Booked'
-          component={BookedScreen}/>
+          name={'All'}
+          component={AppNavigation}
+          options={{
+            tabBarIcon: ({color}) => (<Ionicons name='ios-albums' size={25} color={color}/>)
+          }}/>
 
         <BottomTab.Screen
-          name={'Post'}
-          component={PostScreen}/>
+          name='Booked'
+          component={BookedScreen}
+          options={{
+            tabBarIcon: ({color}) => (<Ionicons name='ios-star' size={25} color={color}/>)
+          }}/>
       </BottomTab.Navigator>
     </NavigationContainer>
   )
