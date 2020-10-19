@@ -1,19 +1,50 @@
-import React from 'react'
+import React from 'react';
 
-import {View, StyleSheet, Text} from 'react-native'
+import {View, StyleSheet, Text, Image, Button, ScrollView, Alert} from 'react-native';
+import {DATA} from '../data';
+import {THEME} from '../theme';
 
-export const PostScreen = ({}) => {
+// Компонент вывода страницы содержания поста
+export const PostScreen = ({ route }) => {
+  const { postId } = route.params;
+
+  const post = DATA.find(item => item.id === postId);
+
+  const removeHandler = () => {
+    Alert.alert(
+      'Удаление поста',
+      'Вы точно хотите удалить пост?',
+      [
+        {
+          text: 'Отменить',
+          style: 'cancel'
+        },
+        { text: 'Удалить', style: 'destructive', onPress: () => {} }
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
-    <View style={styles.center}>
-      <Text>MainScreen</Text>
-    </View>
-  )
-}
+    <ScrollView>
+      <Image source={{uri: post.img}} style={styles.image}/>
+      <View style={styles.textWrap}>
+        <Text style={styles.title}>{post.text}</Text>
+      </View>
+      <Button title="Удалить" color={THEME.DANDER_COLOR} onPress={removeHandler}/>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  textWrap: {
+    padding: 10
+  },
+  image: {
+    width: '100%',
+    height: 200
+  },
+  title: {
+    fontFamily: 'open-regular'
   }
-})
+});
