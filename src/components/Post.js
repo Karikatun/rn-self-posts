@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-import {View, StyleSheet, ImageBackground, Text, TouchableOpacity} from 'react-native'
+import {View, StyleSheet, ImageBackground, Text, TouchableOpacity} from 'react-native';
 
+// Компонент вывода карточки поста
 export default function Post ({post, onOpen}) {
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(post)}>
@@ -13,7 +14,7 @@ export default function Post ({post, onOpen}) {
         </ImageBackground>
       </View>
     </TouchableOpacity>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -35,4 +36,4 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'open-regular'
   }
-})
+});

@@ -1,0 +1,17 @@
+checks:
+  identical-code:
+    config:
+      threshold: 150
+  similar-code:
+    config:
+      threshold: 200
+  method-count:
+    config:
+      threshold: 50
+  method-lines:
+    config:
+      threshold: 35
+eslint:
+  enabled: true
+  config:
+    config: .eslintrc.json

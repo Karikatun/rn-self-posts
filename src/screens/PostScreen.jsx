@@ -1,13 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-import {View, StyleSheet, Text, Image, Button, ScrollView, Alert} from 'react-native'
-import {DATA} from "../data";
-import {THEME} from "../theme";
+import {View, StyleSheet, Text, Image, Button, ScrollView, Alert} from 'react-native';
+import {DATA} from '../data';
+import {THEME} from '../theme';
 
-export const PostScreen = ({ route, navigation }) => {
+// Компонент вывода страницы содержания поста
+export const PostScreen = ({ route }) => {
   const { postId } = route.params;
 
-  const post = DATA.find(item => item.id === postId)
+  const post = DATA.find(item => item.id === postId);
 
   const removeHandler = () => {
     Alert.alert(
@@ -22,7 +23,7 @@ export const PostScreen = ({ route, navigation }) => {
       ],
       { cancelable: false }
     );
-  }
+  };
 
   return (
     <ScrollView>
@@ -30,10 +31,10 @@ export const PostScreen = ({ route, navigation }) => {
       <View style={styles.textWrap}>
         <Text style={styles.title}>{post.text}</Text>
       </View>
-      <Button title='Удалить' color={THEME.DANDER_COLOR} onPress={removeHandler}/>
+      <Button title="Удалить" color={THEME.DANDER_COLOR} onPress={removeHandler}/>
     </ScrollView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   textWrap: {
@@ -46,4 +47,4 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'open-regular'
   }
-})
+});

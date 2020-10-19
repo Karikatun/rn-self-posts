@@ -1,29 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-import {View, StyleSheet, FlatList} from 'react-native'
 import {DATA} from '../data';
 
-import Post from "../components/Post";
+import {PostList} from '../components/PostList';
 
+// Компонент вывода страницы списка всех постов
 export const MainScreen = ({ navigation }) => {
+  // Функция открытия поста
   const openPostHandler = (post) => {
-    navigation.navigate('Post', { postId: post.id, date: post.date, booked: post.booked })
-  }
+    navigation.navigate('Post', { postId: post.id, date: post.date, booked: post.booked });
+  };
 
   return (
-    <View style={styles.wrapper}>
-      <FlatList data={DATA}
-                keyExtractor={(post => post.id.toString())}
-                renderItem={({item}) => {
-        return <Post post={item} onOpen={openPostHandler}/>
-      }}/>
-    </View>
-  )
-}
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    padding: 10
-  }
-})
+    <PostList data={DATA} onOpen={openPostHandler}/>
+  );
+};

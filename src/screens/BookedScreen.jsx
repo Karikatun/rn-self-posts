@@ -1,19 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-import {View, StyleSheet, Text} from 'react-native'
+import {DATA} from '../data';
 
-export const BookedScreen = ({}) => {
+import { PostList } from '../components/PostList';
+
+// Компонент вывода страницы списка избранных постов
+export const BookedScreen = ({ navigation }) => {
+  // Функция открытия поста
+  const openPostHandler = (post) => {
+    navigation.navigate('Post', { postId: post.id, date: post.date, booked: post.booked });
+  };
+
   return (
-    <View style={styles.center}>
-      <Text>BookedScreen</Text>
-    </View>
-  )
-}
-
-const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
+    <PostList data={DATA.filter(post => post.booked)} onOpen={openPostHandler}/>
+  );
+};

@@ -1,14 +1,15 @@
-import React from 'react'
+import React from 'react';
 
-import {View, StyleSheet, Text} from 'react-native'
+import {View, StyleSheet, Text} from 'react-native';
 
+// Компонент вывода страницы создания постов
 export const CreateScreen = ({}) => {
   return (
     <View style={styles.center}>
-      <Text>MainScreen</Text>
+      <Text>Создать пост</Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   center: {
@@ -16,4 +17,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   }
-})
+});
