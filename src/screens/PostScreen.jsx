@@ -1,12 +1,31 @@
-import React from 'react';
+import React, {useEffect, useCallback} from 'react';
 
 import {View, StyleSheet, Text, Image, Button, ScrollView, Alert} from 'react-native';
+import {useDispatch, useSelector} from "react-redux";
 import {DATA} from '../data';
 import {THEME} from '../theme';
+import {toggleBooked} from "../redux/actions/post";
 
 // Компонент вывода страницы содержания поста
-export const PostScreen = ({ route }) => {
+export const PostScreen = ({ route, navigation }) => {
+  const dispatch = useDispatch();
   const { postId } = route.params;
+
+  const booked = useSelector(state =>
+    state.post.bookedPosts.some(post => post.id === postId)
+  );
+
+  const toggleHandler = useCallback(() => {
+    dispatch(toggleBooked(postId))
+  }, [dispatch, postId])
+
+  useEffect(() => {
+    navigation.setParams({ booked })
+  }, [booked])
+
+  useEffect(() => {
+    navigation.setParams({ toggleHandler })
+  }, [])
 
   const post = DATA.find(item => item.id === postId);
 

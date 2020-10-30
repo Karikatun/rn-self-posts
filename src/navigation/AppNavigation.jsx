@@ -25,10 +25,10 @@ const navigatorOptions = (
   <Stack.Screen
     name={'Post'}
     component={PostScreen}
-    options={({ route: { params: { date, booked } } }) => ({
+    options={({ route: { params: { date, booked, toggleHandler } } }) => ({
       title: 'Пост от ' + new Date(date).toLocaleDateString(),
       headerRight: () => (
-        <TouchableWithoutFeedback onPress={() => console.log('press photo')}>
+        <TouchableWithoutFeedback onPress={toggleHandler}>
           <Ionicons
             name={booked ? 'ios-star' : 'ios-star-outline'}
             size={24} color={Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR}
