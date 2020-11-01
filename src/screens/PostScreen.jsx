@@ -2,9 +2,8 @@ import React, {useEffect, useCallback} from 'react';
 
 import {View, StyleSheet, Text, Image, Button, ScrollView, Alert} from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
-import {DATA} from '../data';
 import {THEME} from '../theme';
-import {toggleBooked} from "../redux/actions/post";
+import {removePost, toggleBooked} from "../redux/actions/post";
 
 // Компонент вывода страницы содержания поста
 export const PostScreen = ({ route, navigation }) => {
@@ -27,7 +26,7 @@ export const PostScreen = ({ route, navigation }) => {
     navigation.setParams({ toggleHandler })
   }, [])
 
-  const post = DATA.find(item => item.id === postId);
+  const post = useSelector(state => state.post.allPosts.find(p => p.id === postId));
 
   const removeHandler = () => {
     Alert.alert(
@@ -38,11 +37,17 @@ export const PostScreen = ({ route, navigation }) => {
           text: 'Отменить',
           style: 'cancel'
         },
-        { text: 'Удалить', style: 'destructive', onPress: () => {} }
+        { text: 'Удалить', style: 'destructive', onPress() {
+            navigation.navigate('Main');
+            dispatch(removePost(postId))
+          }
+        }
       ],
       { cancelable: false }
     );
   };
+
+  if (!post) return null
 
   return (
     <ScrollView>
