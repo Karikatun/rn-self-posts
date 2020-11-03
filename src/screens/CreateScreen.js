@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 
-import {View, StyleSheet, Text, TextInput, Image, Button, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {View, StyleSheet, Text, TextInput, Button, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {useDispatch} from 'react-redux';
+
+import {PhotoPicker} from '../components/PhotoPicker';
 
 import {addPost} from '../redux/actions/post';
 
@@ -11,23 +13,28 @@ import {THEME} from '../theme';
 export const CreateScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [text, setText] = useState('');
+  const [image, setImage] = useState('');
 
   const createPostHandler = () => {
     const post = {
       date: new Date().toJSON(),
       text: text,
-      img: 'https://static.coindesk.com/wp-content/uploads/2019/01/shutterstock_1012724596-860x430.jpg',
+      img: image,
       booked: false
     };
     dispatch(addPost(post));
     navigation.navigate('Main');
   };
 
+  const photoPickHandler = (uri) => {
+    setImage(uri);
+  };
+
   return (
     <ScrollView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.wrapper}>
-          <Text style={styles.title}>Создай новый пост</Text>
+          <Text style={styles.title}>Создать новый пост</Text>
           <TextInput
             style={styles.textarea}
             placeholder={'Введите текст поста'}
@@ -35,8 +42,12 @@ export const CreateScreen = ({navigation}) => {
             onChangeText={setText}
             multiline
           />
-          <Image source={{uri: 'https://static.coindesk.com/wp-content/uploads/2019/01/shutterstock_1012724596-860x430.jpg'}}/>
-          <Button title={'Создать пост'} color={THEME.MAIN_COLOR} onPress={createPostHandler}/>
+          <PhotoPicker onPick={photoPickHandler}/>
+          <Button
+            title={'Создать пост'}
+            color={THEME.MAIN_COLOR}
+            onPress={createPostHandler}
+            disabled={!text || !image}/>
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>
