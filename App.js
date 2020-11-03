@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 import {AppLoading} from 'expo';
+import {Provider} from "react-redux";
+import store from './src/redux/store'
 
 import { bootstrap } from './src/bootstrap';
 import { DrawerNavigation } from './src/navigation/AppNavigation';
@@ -19,6 +21,8 @@ export default function App() {
   }
 
   return (
-    <DrawerNavigation />
+    <Provider store={store}>
+      <DrawerNavigation />
+    </Provider>
   );
 }

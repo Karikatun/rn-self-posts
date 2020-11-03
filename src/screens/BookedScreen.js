@@ -1,17 +1,18 @@
 import React from 'react';
 
-import {DATA} from '../data';
+import {useSelector} from 'react-redux';
 
 import { PostList } from '../components/PostList';
 
 // Компонент вывода страницы списка избранных постов
 export const BookedScreen = ({ navigation }) => {
+  const bookedPosts = useSelector(state => state.post.bookedPosts);
   // Функция открытия поста
   const openPostHandler = (post) => {
     navigation.navigate('Post', { postId: post.id, date: post.date, booked: post.booked });
   };
 
   return (
-    <PostList data={DATA.filter(post => post.booked)} onOpen={openPostHandler}/>
+    <PostList data={bookedPosts} onOpen={openPostHandler}/>
   );
 };

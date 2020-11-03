@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Platform, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import { Platform, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,10 +12,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { MainScreen } from '../screens/MainScreen';
 import { PostScreen } from '../screens/PostScreen';
 import { BookedScreen } from '../screens/BookedScreen';
+import { AboutScreen } from '../screens/AboutScreen';
+import { CreateScreen } from '../screens/CreateScreen';
 
-import {THEME} from '../theme';
-import {AboutScreen} from '../screens/AboutScreen';
-import {CreateScreen} from '../screens/CreateScreen';
+import { THEME } from '../theme';
 
 const Stack = createStackNavigator();
 const BottomTab = Platform.OS === 'ios' ? createBottomTabNavigator() : createMaterialBottomTabNavigator();
@@ -25,10 +25,10 @@ const navigatorOptions = (
   <Stack.Screen
     name={'Post'}
     component={PostScreen}
-    options={({ route: { params: { date, booked } } }) => ({
+    options={({ route: { params: { date, booked, toggleHandler } } }) => ({
       title: 'Пост от ' + new Date(date).toLocaleDateString(),
       headerRight: () => (
-        <TouchableWithoutFeedback onPress={() => console.log('press photo')}>
+        <TouchableWithoutFeedback onPress={toggleHandler}>
           <Ionicons
             name={booked ? 'ios-star' : 'ios-star-outline'}
             size={24} color={Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR}
@@ -49,6 +49,7 @@ const stackScreenOptions = {
   }
 };
 
+// Выбор темизации табов для разных типов устройств
 const getNavigationOptions = () => {
   if (Platform.OS === 'ios') {
     //Props for the ios navigator

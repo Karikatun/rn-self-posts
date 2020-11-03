@@ -1,14 +1,34 @@
-import React from 'react';
+import React, {useEffect, useCallback} from 'react';
 
 import {View, StyleSheet, Text, Image, Button, ScrollView, Alert} from 'react-native';
-import {DATA} from '../data';
+
+import {useDispatch, useSelector} from 'react-redux';
+import {removePost, toggleBooked} from '../redux/actions/post';
+
 import {THEME} from '../theme';
 
 // Компонент вывода страницы содержания поста
-export const PostScreen = ({ route }) => {
+export const PostScreen = ({ route, navigation }) => {
+  const dispatch = useDispatch();
   const { postId } = route.params;
 
-  const post = DATA.find(item => item.id === postId);
+  const booked = useSelector(state =>
+    state.post.bookedPosts.some(post => post.id === postId)
+  );
+
+  const toggleHandler = useCallback(() => {
+    dispatch(toggleBooked(postId));
+  }, [dispatch, postId]);
+
+  useEffect(() => {
+    navigation.setParams({ booked });
+  }, [booked]);
+
+  useEffect(() => {
+    navigation.setParams({ toggleHandler });
+  }, []);
+
+  const post = useSelector(state => state.post.allPosts.find(p => p.id === postId));
 
   const removeHandler = () => {
     Alert.alert(
@@ -19,11 +39,17 @@ export const PostScreen = ({ route }) => {
           text: 'Отменить',
           style: 'cancel'
         },
-        { text: 'Удалить', style: 'destructive', onPress: () => {} }
+        { text: 'Удалить', style: 'destructive', onPress() {
+            navigation.navigate('Main');
+            dispatch(removePost(postId));
+          }
+        }
       ],
       { cancelable: false }
     );
   };
+
+  if (!post) {return null;}
 
   return (
     <ScrollView>
