@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 
 import {View, StyleSheet, Text, TextInput, Image, Button, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
-import {useDispatch} from "react-redux";
+import {useDispatch} from 'react-redux';
 
-import {addPost} from "../redux/actions/post";
+import {addPost} from '../redux/actions/post';
 
-import {THEME} from "../theme";
+import {THEME} from '../theme';
 
 // Компонент вывода страницы создания постов
 export const CreateScreen = ({navigation}) => {
@@ -20,8 +20,8 @@ export const CreateScreen = ({navigation}) => {
       booked: false
     };
     dispatch(addPost(post));
-    navigation.navigate('Main')
-  }
+    navigation.navigate('Main');
+  };
 
   return (
     <ScrollView>

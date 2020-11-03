@@ -1,9 +1,11 @@
 import React, {useEffect, useCallback} from 'react';
 
 import {View, StyleSheet, Text, Image, Button, ScrollView, Alert} from 'react-native';
-import {useDispatch, useSelector} from "react-redux";
+
+import {useDispatch, useSelector} from 'react-redux';
+import {removePost, toggleBooked} from '../redux/actions/post';
+
 import {THEME} from '../theme';
-import {removePost, toggleBooked} from "../redux/actions/post";
 
 // Компонент вывода страницы содержания поста
 export const PostScreen = ({ route, navigation }) => {
@@ -15,16 +17,16 @@ export const PostScreen = ({ route, navigation }) => {
   );
 
   const toggleHandler = useCallback(() => {
-    dispatch(toggleBooked(postId))
-  }, [dispatch, postId])
+    dispatch(toggleBooked(postId));
+  }, [dispatch, postId]);
 
   useEffect(() => {
-    navigation.setParams({ booked })
-  }, [booked])
+    navigation.setParams({ booked });
+  }, [booked]);
 
   useEffect(() => {
-    navigation.setParams({ toggleHandler })
-  }, [])
+    navigation.setParams({ toggleHandler });
+  }, []);
 
   const post = useSelector(state => state.post.allPosts.find(p => p.id === postId));
 
@@ -39,7 +41,7 @@ export const PostScreen = ({ route, navigation }) => {
         },
         { text: 'Удалить', style: 'destructive', onPress() {
             navigation.navigate('Main');
-            dispatch(removePost(postId))
+            dispatch(removePost(postId));
           }
         }
       ],
@@ -47,7 +49,7 @@ export const PostScreen = ({ route, navigation }) => {
     );
   };
 
-  if (!post) return null
+  if (!post) {return null;}
 
   return (
     <ScrollView>
